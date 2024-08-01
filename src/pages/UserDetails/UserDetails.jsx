@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import { fetchUsersById } from "../../services/api";
 import { Link } from "react-router-dom";
-import { useRef } from "react";
+import { useRef, Suspense } from "react";
 
 const UserDetails = () => {
   const params = useParams();
@@ -49,7 +49,9 @@ const UserDetails = () => {
         <NavLink to='address'>Address</NavLink>
         <NavLink to='posts'>Posts</NavLink>
       </div>
-      <Outlet />
+      <Suspense Fallback={<h3>Loading...</h3>}>
+        <Outlet />
+      </Suspense>
     </div>
   );
 };
