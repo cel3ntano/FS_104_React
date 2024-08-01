@@ -6,18 +6,19 @@ import { useSearchParams } from "react-router-dom";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
-  const [filterValue, setFilterValue] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
-  console.log(searchParams);
+  const filterValue = searchParams.get("query") ?? "";
 
   useEffect(() => {
     fetchUsers().then(data => setUsers(data));
   }, []);
 
   const handleChangeFilter = newFilterValue => {
+    if (!newFilterValue) {
+      return setSearchParams({});
+    }
     searchParams.set("query", newFilterValue);
     setSearchParams(searchParams);
-    setFilterValue(newFilterValue);
   };
 
   const filteredData = users.filter(
