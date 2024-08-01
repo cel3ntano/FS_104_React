@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { NavLink, Outlet, useLocation, useParams } from "react-router-dom";
+import {
+  NavLink,
+  Outlet,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import { fetchUsersById } from "../../services/api";
 import { Link } from "react-router-dom";
 import { useRef } from "react";
@@ -8,8 +14,19 @@ const UserDetails = () => {
   const params = useParams();
   console.log(params);
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
   const location = useLocation;
   const goBackRef = useRef(location?.state || "/users");
+
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      navigate("/");
+    }, 3000);
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [navigate]);
 
   useEffect(() => {
     fetchUsersById(params.userId).then(data => setUser(data));
