@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import UsersList from "../../components/UsersList/UsersList";
 import { fetchUsers } from "../../services/api";
 import SearchBar from "../../components/SearchBar/SearchBar";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const location = useLocation();
+
   const filterValue = searchParams.get("query") ?? "";
 
   useEffect(() => {
