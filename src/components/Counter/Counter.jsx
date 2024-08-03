@@ -12,8 +12,8 @@ export const Counter = () => {
   return (
     <div className={s.flexContainer}>
       <div className={s.wrapper}>
-        <h1>{1}</h1>
-        <input value={1} onChange={handleChangeStep} />
+        <h1>{counter}</h1>
+        <input value={step} onChange={handleChangeStep} />
         <div className={s.flex}>
           <button className='btn' onClick={handleMinusClick}>
             minus
