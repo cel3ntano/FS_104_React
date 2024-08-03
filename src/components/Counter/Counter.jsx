@@ -1,6 +1,10 @@
-import s from './Counter.module.css';
+import { useSelector } from "react-redux";
+import s from "./Counter.module.css";
 
 export const Counter = () => {
+  const counter = useSelector(state => state.counter.counter);
+  const step = useSelector(state => state.counter.step);
+
   const handlePlusClick = () => {};
   const handleMinusClick = () => {};
   const handleResetClick = () => {};
