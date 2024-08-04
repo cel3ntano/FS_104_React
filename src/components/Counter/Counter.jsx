@@ -1,7 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux';
-import s from './Counter.module.css';
-import { selectCounter, selectStep } from '../../redux/counter/selectors';
-import { changeStep, decrement, increment, reset } from '../../redux/counter/actions';
+import { useDispatch, useSelector } from "react-redux";
+import s from "./Counter.module.css";
+import { selectCounter, selectStep } from "../../redux/counter/selectors";
+import {
+  changeStep,
+  decrement,
+  increment,
+  reset,
+} from "../../redux/counter/slice";
 
 export const Counter = () => {
   // йде до редакс і отримує данні від нього

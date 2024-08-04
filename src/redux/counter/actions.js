@@ -1,5 +1,5 @@
-import { createAction } from "@reduxjs/toolkit";
-import { CHANGE_STEP, DECREMENT, INCREMENT, RESET } from "./constants";
+// import { createAction } from "@reduxjs/toolkit";
+// import { CHANGE_STEP, DECREMENT, INCREMENT, RESET } from "./constants";
 
 // export const increment = () => {
 //   return { type: INCREMENT };
@@ -13,7 +13,7 @@ import { CHANGE_STEP, DECREMENT, INCREMENT, RESET } from "./constants";
 // export const changeStep = step => {
 //   return { type: CHANGE_STEP, payload: step };
 // };
-export const increment = createAction("increment");
-export const decrement = createAction("decrement");
-export const reset = createAction("reset");
-export const changeStep = createAction("changeStep");
+// export const increment = createAction("increment");
+// export const decrement = createAction("decrement");
+// export const reset = createAction("reset");
+// export const changeStep = createAction("changeStep");

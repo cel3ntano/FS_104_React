@@ -1,26 +1,21 @@
-import { createReducer } from "@reduxjs/toolkit";
-import { changeStep, decrement, increment, reset } from "./actions";
+// import { createReducer } from "@reduxjs/toolkit";
+// import { changeStep, decrement, increment, reset } from "./actions";
 
-const initialState = {
-  counter: 0,
-  step: 1,
-};
-
-export const counterReducer = createReducer(initialState, builder => {
-  builder
-    .addCase(increment, (state, action) => {
-      state.counter += state.step;
-    })
-    .addCase(decrement, (state, action) => {
-      state.counter -= state.step;
-    })
-    .addCase(reset, (state, action) => {
-      return initialState;
-    })
-    .addCase(changeStep, (state, action) => {
-      state.step = action.payload;
-    });
-});
+// export const counterReducer = createReducer(initialState, builder => {
+//   builder
+//     .addCase(increment, (state, action) => {
+//       state.counter += state.step;
+//     })
+//     .addCase(decrement, (state, action) => {
+//       state.counter -= state.step;
+//     })
+//     .addCase(reset, (state, action) => {
+//       return initialState;
+//     })
+//     .addCase(changeStep, (state, action) => {
+//       state.step = action.payload;
+//     });
+// });
 
 // export const counterReducer = (state = initialState, action) => {
 //   switch (action.type) {
