@@ -1,9 +1,19 @@
-import { Field, Form, Formik } from 'formik';
-import s from './TodoList.module.css';
+import { Field, Form, Formik } from "formik";
+import s from "./TodoList.module.css";
+import { addTodo } from "../../redux/todos/slice";
+import { useDispatch } from "react-redux";
+import { nanoid } from "@reduxjs/toolkit";
 
 export const AddForm = () => {
-  const initialValues = { todo: '' };
-  const onSubmit = values => {
+  const dispatch = useDispatch();
+  const initialValues = { todo: "" };
+  const onSubmit = (values, options) => {
+    const newItem = {
+      todo: values.todo,
+      id: nanoid(),
+    };
+    dispatch(addTodo(newItem));
+    options.resetForm();
     console.log(values);
   };
   return (
