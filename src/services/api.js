@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 export const fetchNews = async (query, page = 0, perPage = 5) => {
   const response = await axios.get(`https://hn.algolia.com/api/v1/search`, {
@@ -12,7 +12,7 @@ export const fetchNews = async (query, page = 0, perPage = 5) => {
 };
 
 export const fetchUsers = async () => {
-  const response = await axios.get('https://dummyjson.com/users?limit=100');
+  const response = await axios.get("https://dummyjson.com/users?limit=100");
   return response.data.users;
 };
 export const fetchUsersById = async id => {
