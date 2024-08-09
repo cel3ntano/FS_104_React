@@ -1,5 +1,4 @@
 import axios from "axios";
-import { deleteTodo } from "./slice";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 axios.defaults.baseURL = "https://66b252df1ca8ad33d4f75f79.mockapi.io/";
@@ -22,11 +21,23 @@ export const deleteTodosThunk = createAsyncThunk(
   async (id, thunkApi) => {
     try {
       // const { data } = await axios.delete(`todos/${id}`);
-      await axios.delete(`todos/${id}`);
+      await axios.delete(`todos1/${id}`);
       // return data.id;
       return id;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const addTodoThunk = createAsyncThunk(
+  "addTodo",
+  async (body, thunkAPI) => {
+    try {
+      const { data } = await axios.post("todos", body);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );

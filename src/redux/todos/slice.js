@@ -1,24 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { deleteTodosThunk, fetchTodosThunk } from "./operations";
-// 1.
+import { deleteTodosThunk, fetchTodosThunk, addTodoThunk } from "./operations";
+
 const initialState = {
   items: [],
   isLoading: false,
   isError: false,
 };
 
-// 2.
 const slice = createSlice({
   name: "todos",
   initialState,
-  reducers: {
-    deleteTodo: (state, action) => {
-      state.items = state.items.filter(item => item.id !== action.payload);
-    },
-    addTodo: (state, action) => {
-      state.items.push(action.payload);
-    },
-  },
   extraReducers: builder => {
     builder
       .addCase(fetchTodosThunk.fulfilled, (state, action) => {
@@ -30,9 +21,14 @@ const slice = createSlice({
       })
       .addCase(deleteTodosThunk.fulfilled, (state, action) => {
         state.items = state.items.filter(item => item.id !== action.payload);
+      })
+      .addCase(addTodoThunk.fulfilled, (state, action) => {
+        state.items.push(action.payload);
+      })
+      .addCase(deleteTodosThunk.rejected, (state, action) => {
+        state.isError = true;
       });
   },
 });
-// 3.
+
 export const todosReducer = slice.reducer;
-export const { deleteTodo, addTodo } = slice.actions;

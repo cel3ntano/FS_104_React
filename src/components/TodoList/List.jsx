@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectTodos } from "../../redux/todos/selectors";
 import { selectFilter } from "../../redux/filter/selectors";
 import s from "./TodoList.module.css";
-import { deleteTodoThunk } from "../../redux/todos/operations";
+import { deleteTodosThunk } from "../../redux/todos/operations";
 export const List = () => {
   const todos = useSelector(selectTodos);
   const filter = useSelector(selectFilter);
@@ -20,7 +20,7 @@ export const List = () => {
             <p>{item.todo}</p>
             <button
               className={s.btn}
-              onClick={() => dispatch(deleteTodoThunk(item.id))}>
+              onClick={() => dispatch(deleteTodosThunk(item.id))}>
               Delete
             </button>
           </li>
