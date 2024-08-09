@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { deleteTodosThunk, fetchTodosThunk } from "./operations";
 // 1.
 const initialState = {
   items: [],
@@ -11,17 +12,6 @@ const slice = createSlice({
   name: "todos",
   initialState,
   reducers: {
-    setLoadingStatus: (state, action) => {
-      state.isLoading = action.payload;
-    },
-    setErrorStatus: (state, action) => {
-      state.isError = action.payload;
-    },
-
-    fetchData: (state, action) => {
-      state.items = action.payload;
-    },
-
     deleteTodo: (state, action) => {
       state.items = state.items.filter(item => item.id !== action.payload);
     },
@@ -29,13 +19,20 @@ const slice = createSlice({
       state.items.push(action.payload);
     },
   },
+  extraReducers: builder => {
+    builder
+      .addCase(fetchTodosThunk.fulfilled, (state, action) => {
+        state.items = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(fetchTodosThunk.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteTodosThunk.fulfilled, (state, action) => {
+        state.items = state.items.filter(item => item.id !== action.payload);
+      });
+  },
 });
 // 3.
 export const todosReducer = slice.reducer;
-export const {
-  deleteTodo,
-  addTodo,
-  setLoadingStatus,
-  setErrorStatus,
-  fetchData,
-} = slice.actions;
+export const { deleteTodo, addTodo } = slice.actions;
