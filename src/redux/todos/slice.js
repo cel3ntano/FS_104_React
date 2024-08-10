@@ -11,12 +11,18 @@ const initialState = {
   items: [],
   isLoading: false,
   isError: false,
+  sortType: "all",
 };
 
 // 2.
 const slice = createSlice({
   name: "todos",
   initialState,
+  reducers: {
+    changeSortType: (state, action) => {
+      state.sortType = action.payload;
+    },
+  },
 
   extraReducers: builder => {
     builder
@@ -73,3 +79,4 @@ const slice = createSlice({
 });
 
 export const todosReducer = slice.reducer;
+export const { changeSortType } = slice.actions;

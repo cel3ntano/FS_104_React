@@ -1,14 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-  selectTodos,
-  selectUncompletedTodos,
+  selectSortedTodos,
   selectUncompletedTodosMemo,
 } from "../../redux/todos/selectors";
 import { selectFilter } from "../../redux/filter/selectors";
 import s from "./TodoList.module.css";
 import { deleteTodoThunk, toggleTodoThunk } from "../../redux/todos/operations";
 export const List = () => {
-  const todos = useSelector(selectTodos);
+  const todos = useSelector(selectSortedTodos);
   const filter = useSelector(selectFilter);
   const uncompletedTodos = useSelector(selectUncompletedTodosMemo);
   const dispatch = useDispatch();
