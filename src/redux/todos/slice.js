@@ -5,6 +5,7 @@ import {
   addTodoThunk,
   toggleTodoThunk,
 } from "./operations";
+import { isAnyOf } from "@reduxjs/toolkit";
 // 1.
 const initialState = {
   items: [],
@@ -21,17 +22,11 @@ const slice = createSlice({
     builder
       .addCase(fetchTodosThunk.fulfilled, (state, action) => {
         state.items = action.payload;
-        state.isLoading = false;
-      })
-      .addCase(fetchTodosThunk.pending, (state, action) => {
-        state.isLoading = true;
       })
       .addCase(deleteTodoThunk.fulfilled, (state, action) => {
         state.items = state.items.filter(item => item.id !== action.payload);
       })
-      .addCase(deleteTodoThunk.rejected, (state, action) => {
-        state.isError = true;
-      })
+
       .addCase(addTodoThunk.fulfilled, (state, action) => {
         state.items.push(action.payload);
       })
@@ -41,7 +36,39 @@ const slice = createSlice({
             ? { ...item, completed: !item.completed }
             : item
         );
-      });
+      })
+      .addMatcher(
+        isAnyOf(
+          fetchTodosThunk.pending,
+          deleteTodoThunk.pending,
+          addTodoThunk.pending
+        ),
+        state => {
+          state.isLoading = true;
+          state.isError = false;
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchTodosThunk.rejected,
+          deleteTodoThunk.rejected,
+          addTodoThunk.rejected
+        ),
+        state => {
+          state.isLoading = false;
+          state.isError = true;
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchTodosThunk.fulfilled,
+          deleteTodoThunk.fulfilled,
+          addTodoThunk.fulfilled
+        ),
+        state => {
+          state.isLoading = false;
+        }
+      );
   },
 });
 
