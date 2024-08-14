@@ -19,7 +19,7 @@ export const deleteTodoThunk = createAsyncThunk(
   "deleteTodo",
   async (id, thunkAPI) => {
     try {
-      await axios.delete(`todos1/${id}`);
+      await axios.delete(`todos/${id}`);
       return id;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
