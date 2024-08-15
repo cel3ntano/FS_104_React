@@ -1,14 +1,17 @@
 import { Field, Form, Formik } from "formik";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { loginThunk } from "../../redux/auth/operations";
 
 export default function Login() {
+  const dispatch = useDispatch();
   const initialValues = {
     email: "",
     password: "",
   };
 
   const handleSubmit = (values, options) => {
-    console.log(values);
+    dispatch(loginThunk(values));
 
     options.resetForm();
   };
@@ -21,7 +24,7 @@ export default function Login() {
           <Field name='password' type='password' placeholder='Enter password' />
           <button type='submit'>Login</button>
           <p>
-            Need a new account? <Link to='/register'>Sign up</Link>
+            Need an account? <Link to='/register'>Sign up</Link>
           </p>
         </Form>
       </Formik>
