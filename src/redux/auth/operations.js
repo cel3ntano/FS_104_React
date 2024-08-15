@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { goItAPI } from "../../config/goItApi";
+import { goItAPI } from "../../config/goItAPI";
 
 export const registerThunk = createAsyncThunk(
   "register",

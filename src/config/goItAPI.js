@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export const goItAPI = axios.create({
-  baseURL: "",
+  baseURL: "https://connections-api.goit.global/",
 });
