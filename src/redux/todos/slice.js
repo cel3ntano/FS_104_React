@@ -1,16 +1,22 @@
-import { createSlice, isAnyOf } from '@reduxjs/toolkit';
-import { deleteTodoThunk, fetchTodosThunk, addTodoThunk, toggleTodoThunk } from './operations';
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
+import {
+  deleteTodoThunk,
+  fetchTodosThunk,
+  addTodoThunk,
+  toggleTodoThunk,
+} from "./operations";
+import { logoutThunk } from "../auth/operations";
 // 1.
 const initialState = {
   items: [],
   isLoading: false,
   isError: false,
-  sortType: 'all',
+  sortType: "all",
 };
 
 // 2.
 const slice = createSlice({
-  name: 'todos',
+  name: "todos",
   initialState,
   reducers: {
     changeSortType: (state, action) => {
@@ -32,20 +38,48 @@ const slice = createSlice({
       })
 
       .addCase(toggleTodoThunk.fulfilled, (state, action) => {
-        state.items = state.items.map(item => (item.id === action.payload ? { ...item, completed: !item.completed } : item));
+        state.items = state.items.map(item =>
+          item.id === action.payload
+            ? { ...item, completed: !item.completed }
+            : item
+        );
+      })
+      .addCase(logoutThunk.fulfilled, () => {
+        return initialState;
       })
 
-      .addMatcher(isAnyOf(fetchTodosThunk.pending, deleteTodoThunk.pending, addTodoThunk.pending), state => {
-        state.isLoading = true;
-        state.isError = false;
-      })
-      .addMatcher(isAnyOf(fetchTodosThunk.rejected, deleteTodoThunk.rejected, addTodoThunk.rejected), state => {
-        state.isLoading = false;
-        state.isError = true;
-      })
-      .addMatcher(isAnyOf(fetchTodosThunk.fulfilled, deleteTodoThunk.fulfilled, addTodoThunk.fulfilled), state => {
-        state.isLoading = false;
-      });
+      .addMatcher(
+        isAnyOf(
+          fetchTodosThunk.pending,
+          deleteTodoThunk.pending,
+          addTodoThunk.pending
+        ),
+        state => {
+          state.isLoading = true;
+          state.isError = false;
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchTodosThunk.rejected,
+          deleteTodoThunk.rejected,
+          addTodoThunk.rejected
+        ),
+        state => {
+          state.isLoading = false;
+          state.isError = true;
+        }
+      )
+      .addMatcher(
+        isAnyOf(
+          fetchTodosThunk.fulfilled,
+          deleteTodoThunk.fulfilled,
+          addTodoThunk.fulfilled
+        ),
+        state => {
+          state.isLoading = false;
+        }
+      );
   },
 });
 

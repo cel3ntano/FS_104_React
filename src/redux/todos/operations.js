@@ -1,49 +1,62 @@
-import axios from 'axios';
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { goItAPI } from "../../config/goItAPI";
 
-axios.defaults.baseURL = 'https://66b252df1ca8ad33d4f75f79.mockapi.io/';
-
-export const fetchTodosThunk = createAsyncThunk('fetchTodos', async (_, thunkAPI) => {
-  try {
-    const { data } = await axios.get('todos');
-    return data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+export const fetchTodosThunk = createAsyncThunk(
+  "fetchTodos",
+  async (_, thunkAPI) => {
+    try {
+      const { data } = await goItAPI.get("tasks");
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
   }
-});
+);
 
-export const deleteTodoThunk = createAsyncThunk('deleteTodo', async (id, thunkAPI) => {
-  try {
-    await axios.delete(`todos/${id}`);
-    return id;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+export const deleteTodoThunk = createAsyncThunk(
+  "deleteTodo",
+  async (id, thunkAPI) => {
+    try {
+      await goItAPI.delete(`tasks/${id}`);
+      return id;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
   }
-});
+);
 
-export const addTodoThunk = createAsyncThunk('addTodo', async (body, thunkAPI) => {
-  try {
-    const { data } = await axios.post('todos', body);
-    return data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+export const addTodoThunk = createAsyncThunk(
+  "addTodo",
+  async (body, thunkAPI) => {
+    try {
+      const { data } = await goItAPI.post("tasks", body);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
   }
-});
+);
 
-export const toggleTodoThunk = createAsyncThunk('toggleTodo', async (body, thunkAPI) => {
-  try {
-    const { data } = await axios.put(`todos/${body.id}`, { ...body, completed: !body.completed });
-    console.log(data);
-    return body.id;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+export const toggleTodoThunk = createAsyncThunk(
+  "toggleTodo",
+  async (body, thunkAPI) => {
+    try {
+      const { data } = await goItAPI.put(`tasks/${body.id}`, {
+        ...body,
+        completed: !body.completed,
+      });
+      console.log(data);
+      return body.id;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
   }
-});
+);
 
 // export const fetchTodosThunk = () => async dispatch => {
 //   try {
 //     dispatch(setLoadingStatus(true));
-//     const response = await axios.get('todos');
+//     const response = await goItAPI.get('todos');
 //     console.log(response.data);
 //     dispatch(fetchData(response.data));
 //   } catch (error) {
@@ -56,7 +69,7 @@ export const toggleTodoThunk = createAsyncThunk('toggleTodo', async (body, thunk
 // export const deleteTodoThunk = id => async dispatch => {
 //   // try {
 //   //   dispatch(setLoadingStatus(true));
-//   //   await axios.delete(`todos/${id}`);
+//   //   await goItAPI.delete(`todos/${id}`);
 //   //   dispatch(deleteTodo(id));
 //   // } catch (error) {
 //   //   dispatch(setErrorStatus(true));
