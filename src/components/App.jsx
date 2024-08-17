@@ -10,14 +10,20 @@ import { useEffect } from "react";
 import { getMeThunk } from "../redux/auth/operations";
 import PrivateRoute from "../Routes/PrivateRoute";
 import PublicRoute from "../Routes/PublicRoute";
+import { selectIsRefreshing } from "../redux/auth/selectors";
+import { useSelector } from "react-redux";
+import Loader from "./TodoList/Loader";
 
 const App = () => {
+  const isRefreshing = useSelector(selectIsRefreshing);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getMeThunk());
   }, [dispatch]);
 
-  return (
+  return isRefreshing ? (
+    <Loader />
+  ) : (
     <>
       <Routes>
         <Route path='/' element={<Layout />}>
